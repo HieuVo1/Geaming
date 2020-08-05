@@ -13,7 +13,7 @@ class ResetPasswordController extends Controller
         if($user==null){
             return response()->json([
                 'message' => 'Not found email'
-                ]);
+            ]);
         }
         
         $passwordReset = PasswordReset::updateOrCreate([
@@ -34,11 +34,11 @@ class ResetPasswordController extends Controller
     public function reset(Request $request, $token)
     {
         $passwordReset = PasswordReset::where('token', $token)->first();
-        
-        echo "<pre>";
-        print_r ($passwordReset);
-        echo "</pre>";
-        die;
+        if($user==null){
+            return response()->json([
+                'message' => 'Not found email'
+            ]);
+        }
         if (Carbon::parse($passwordReset->updated_at)->addMinutes(720)->isPast()) {
             $passwordReset->delete();
 
